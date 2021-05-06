@@ -7,9 +7,7 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/:id
-  def show
-    @article
-  end
+  def show; end
 
   #GET /articles/new
   def new

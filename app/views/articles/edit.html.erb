@@ -1,26 +1,4 @@
 <div>
   <h1>Edit Article</h1>
-  <p><%= link_to 'Back to Articles List', articles_path %></p> 
-  <% if @article.errors.any? %>
-    <h3>The following errors prevented the article from being updated</h3>
-    <ul>
-      <% @article.errors.full_messages.each do |error_msg| %>
-        <li><%= error_msg %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <%= form_with model: @article, local: true do |form| %>
-    <p>
-      <%= form.label :title %></br>
-      <%= form.text_field :title %>
-    </p>
-    <p>
-      <%= form.label :description %></br>
-      <%= form.text_area :description %>
-    </p>
-    <p>
-      <%= form.submit %>
-    </p>
-  <% end %>
-  </br>
+  <%= render 'form' %>
 </div>
