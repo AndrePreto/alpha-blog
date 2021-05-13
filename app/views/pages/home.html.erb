@@ -1,29 +1,29 @@
 <div class="container">
-  <div class="row align-items-center vh-80">
-    <div class="row p-3 bg-light rounded align-items-center">
-      <div class="col-xs-12 col-sm-12 col-md-9">
+  <div class="row align-items-center justify-content-center vh-80">
+    <div class="row p-3 bg-light rounded justify-content-center">
+      <div class="col-12 col-md-9 rounded p-3">
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12 alpha-blog">
+          <div class="col-12 alpha-blog text-center">
             Alpha-Blog
           </div>
           <% @articles.each do |article| %>
-            <div class="col-xs-12 col-sm-4 col-md-4">
-              <div class="card border">
+            <div class="d-none d-lg-block col-lg-4 mb-4">
+              <div class="card border article-preview">
                 <div class="card-body">
                   <h5 class="card-title">
                     <%= article.title.capitalize %>
                   </h5>
                   <p class="card-text">
-                    <%= article.description.capitalize %>
+                    <%= truncate(article.description.capitalize, length: 100) %>
                   </p>
-                  <%= link_to 'Read', article_path(article)%>
                 </div>
+                <%= link_to 'Read', article_path(article), class: 'text-justify pl-3 pb-3' %>
               </div>
             </div>
           <% end %>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-3 bg-white border rounded p-3">
+      <div class="col-12 col-lg-3 bg-white border rounded p-3">
         <div>
           <form>
             <div class="form-group">

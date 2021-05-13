@@ -1,24 +1,40 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Alpha-Blog</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" href="#">
+    Alpha-Blog
+  </a>
+  <button class="navbar-toggler" type="button" 
+          data-toggle="collapse" 
+          data-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <% if params["controller"] != 'pages' %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" 
+         id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <%= link_to 'Articles', articles_path, class: 'nav-link text-white' %>
+        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle text-white" 
+             href="#" 
+             id="navbarDropdown" 
+             role="button" 
+             data-toggle="dropdown" 
+             aria-haspopup="true" 
+             aria-expanded="false">
+            My Articles
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+          <div class="dropdown-menu" 
+               aria-labelledby="navbarDropdown">
+            <%= link_to 'View articles', articles_path, class: 'dropdown-item' %>
+            <%= link_to 'New article', new_article_path, class: 'dropdown-item' %>
           </div>
         </li>
         <li class="nav-item">
-          <%= link_to 'Log Out', articles_path, class: 'nav-link' %>
+          <%= link_to 'Log Out', root_path, class: 'nav-link text-white' %>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
