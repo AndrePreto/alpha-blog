@@ -9,15 +9,16 @@ class ArticlesController < ApplicationController
   # GET /articles/:id
   def show; end
 
-  #GET /articles/new
+  # GET /articles/new
   def new
     @article = Article.new
   end
 
-  #POST /articles
+  # POST /articles
   def create
-    @article = Article.create(article_params)
-    if @article.persisted?
+    @article = Article.new(article_params)
+    @article.user = User.first
+    if @article.save
       flash[:notice] = 'Article was created successfully.'
       redirect_to @article
     else
@@ -25,10 +26,10 @@ class ArticlesController < ApplicationController
     end
   end
 
-  #GET /articles/:id/edit
+  # GET /articles/:id/edit
   def edit; end
 
-  #PUT /article/:id/update
+  # PUT /articles/:id/update
   def update
     if @article.update(article_params)
       flash[:notice] = 'Article was updated successfully.'
@@ -38,6 +39,7 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # DELETE /articles/:id
   def destroy
     @article.destroy
     redirect_to articles_path
