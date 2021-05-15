@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_save :normalize_email
+
   has_many :articles
   
   validates :username, presence: true, 
@@ -9,4 +11,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }, 
                     length: { maximum: 105 },
                     format: { with: VALID_EMAIL_REGEX }
+
+  def normalize_email
+    self.email = email.downcase
+  end
 end
