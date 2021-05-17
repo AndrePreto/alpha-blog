@@ -18,12 +18,10 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.user = User.first
-    if @article.save
-      flash[:notice] = 'Article was created successfully.'
-      redirect_to @article
-    else
-      render 'new'
-    end
+    return render "new" unless @article.save
+
+    flash[:notice] = "Article was created successfully."
+    redirect_to @article
   end
 
   # GET /articles/:id/edit
@@ -31,12 +29,10 @@ class ArticlesController < ApplicationController
 
   # PUT /articles/:id/update
   def update
-    if @article.update(article_params)
-      flash[:notice] = 'Article was updated successfully.'
-      redirect_to @article
-    else
-      render 'edit'
-    end
+    return render "edit" unless @article.update(article_params)
+
+    flash[:notice] = "Article was updated successfully."
+    redirect_to @article
   end
 
   # DELETE /articles/:id

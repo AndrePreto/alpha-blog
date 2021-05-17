@@ -10,7 +10,7 @@
           aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <% if params["controller"] != 'pages' %>
+  <% if params["controller"] != 'pages' && request.original_url.split("/").pop != 'signup' %>
     <div class="collapse navbar-collapse" 
          id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -32,6 +32,9 @@
             <%= link_to 'View articles', articles_path, class: 'dropdown-item' %>
             <%= link_to 'New article', new_article_path, class: 'dropdown-item' %>
           </div>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Bloggers', users_path, class: 'nav-link text-white' %>
         </li>
         <li class="nav-item">
           <%= link_to 'Log Out', root_path, class: 'nav-link text-white' %>
