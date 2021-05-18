@@ -28,7 +28,7 @@
   </div>
   <% if @user.articles.any? %>
     <h3 class="text-center mt-4 mb-4"><%= @user.username %> articles list </h3>
-    <%= render 'articles/articles', articles: @user.articles %>
+    <%= render 'articles/articles' %>
   <% end %>
   <%= link_to '[ Back to Users List ]', users_path, class: 'row text-dark justify-content-center mb-4' %>
 </div>

@@ -1,5 +1,6 @@
   <div class="container mt-4">
-    <% articles.each do |article| %>
+    <%= will_paginate @articles, class: 'apple_pagination mb-4 mt-4' %>
+    <% @articles.each do |article| %>
       <div class="row justify-content-md-center">
         <div class="col-8">
           <div class="card text-center shadow mb-5 rounded border">
@@ -37,4 +38,5 @@
         </div>
       </div>
     <% end %>
+    <%= will_paginate @articles, class: 'apple_pagination mb-4' %>
   </div>

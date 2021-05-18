@@ -3,16 +3,18 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.order('id desc').paginate(page: params[:page], per_page: 5)
     @articles_count = Article.where(user_id: @users.ids).group(:user_id).count
   end
 
   # GET /users/:id
-  def show; end
+  def show 
+    @articles = @user.articles.order('id desc').paginate(page: params[:page], per_page: 5)
+  end
 
   # GET /signup (users#new)
   def new
-    @user ||= User.new
+    @user = User.new
   end
 
   # POST /users
