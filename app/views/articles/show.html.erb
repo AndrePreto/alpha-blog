@@ -15,16 +15,18 @@
             <div class="card-text text-justify">
               <%= simple_format(@article.description) %>
             </div>
-            <%= link_to "Edit", 
-                        edit_article_path(@article), 
-                        class: 'btn btn-outline-primary' 
-            %>
-            <%= link_to "Delete", 
-                        article_path(@article), 
-                        method: :delete, 
-                        data: {confirm: 'Are you sure?'} ,
-                        class: 'btn btn-outline-danger'
-            %>
+            <% if logged_in? && current_user == @article.user %>
+              <%= link_to "Edit", 
+                          edit_article_path(@article), 
+                          class: 'btn btn-outline-primary' 
+              %>
+              <%= link_to "Delete", 
+                          article_path(@article), 
+                          method: :delete, 
+                          data: {confirm: 'Are you sure?'} ,
+                          class: 'btn btn-outline-danger'
+              %>
+            <% end %>
           </div>
           <div class="card-footer bg-dark text-white">
             Created about <%= time_ago_in_words(@article.created_at) %> ago, 

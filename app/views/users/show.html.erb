@@ -9,15 +9,23 @@
           </div>
           <div class="card-body bg-white">
             <h5 class="card-title">
-              <%= gravatar_for @user, size: 200 %>
+              <%= gravatar_for(@user, size: 200) %>
             </h5>
             <p class="card-text">
             <%= pluralize(@user.articles.count, "Article") %>
             </p>
-            <%= link_to "Edit Profile", 
-                         edit_user_path(@user), 
-                         class: 'btn btn-outline-primary' 
-            %>
+            <% if logged_in? && current_user == @user %>
+              <%= link_to "Edit Profile", 
+                          edit_user_path(@user), 
+                          class: 'btn btn-outline-primary' 
+              %>
+              <%= link_to "Delete Profile", 
+                          user_path(@user),
+                          method: :delete, 
+                          class: 'btn btn-outline-danger',
+                          data: { confirm: "Are you sure you want to delete your profile?" }  
+              %>
+            <% end %>
           </div>
           <div class="card-footer bg-dark text-white">
             Joined <%= time_ago_in_words(@user.created_at) %> ago, 

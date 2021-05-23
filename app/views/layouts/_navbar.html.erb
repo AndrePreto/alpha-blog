@@ -1,44 +1,60 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    Alpha-Blog
-  </a>
-  <button class="navbar-toggler" type="button" 
+  <%= link_to 'Alpha-Blog', (logged_in? ? articles_path : root_path), class: 'navbar-brand' %> 
+  <% if logged_in? %>
+    <button class="navbar-toggler" type="button" 
           data-toggle="collapse" 
           data-target="#navbarSupportedContent" 
           aria-controls="navbarSupportedContent" 
           aria-expanded="false" 
           aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <% if params["controller"] != 'pages' && request.original_url.split("/").pop != 'signup' %>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" 
          id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <%= link_to 'Articles', articles_path, class: 'nav-link text-white' %>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" 
-             href="#" 
-             id="navbarDropdown" 
-             role="button" 
-             data-toggle="dropdown" 
-             aria-haspopup="true" 
-             aria-expanded="false">
-            My Articles
-          </a>
-          <div class="dropdown-menu" 
-               aria-labelledby="navbarDropdown">
-            <%= link_to 'View articles', articles_path, class: 'dropdown-item' %>
-            <%= link_to 'New article', new_article_path, class: 'dropdown-item' %>
-          </div>
-        </li>
+      <ul class="navbar-nav mr-auto"> 
         <li class="nav-item">
           <%= link_to 'Bloggers', users_path, class: 'nav-link text-white' %>
         </li>
-        <li class="nav-item">
-          <%= link_to 'Log Out', root_path, class: 'nav-link text-white' %>
-        </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" 
+              href="#" 
+              id="navbarDropdown" 
+              role="button" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false">
+              Articles
+            </a>
+            <div class="dropdown-menu" 
+                aria-labelledby="navbarDropdown">
+              <%= link_to 'View articles', articles_path, class: 'dropdown-item' %>
+              <%= link_to 'New article', new_article_path, class: 'dropdown-item' %>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" 
+              href="#" 
+              id="navbarDropdown" 
+              role="button" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false">
+              <%= current_user.username %>
+            </a>
+            <div class="dropdown-menu" 
+                aria-labelledby="navbarDropdown">
+              <%= link_to 'View my profile', 
+                          user_path(current_user), 
+                          class: 'dropdown-item'
+              %>
+              <%= link_to 'Edit my profile', 
+                          edit_user_path(current_user), 
+                          class: 'dropdown-item' 
+              %>
+              <div class="dropdown-divider"></div>
+              <%= link_to 'Log Out', logout_path, method: :delete, class: 'dropdown-item' %>
+            </div>
+          </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
