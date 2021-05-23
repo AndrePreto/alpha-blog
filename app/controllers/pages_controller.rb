@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   
   # GET / -> root
   def home
-    @articles = Article.limit(3).order("RANDOM()")
+    @articles = Article.limit(4).order("RANDOM()")
   end
 
   # GET /about

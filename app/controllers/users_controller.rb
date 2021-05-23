@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_user
+  before_action :require_current_user, only: [:edit, :update]
 
   # GET /users
   def index
-    @users = User.order('id desc').paginate(page: params[:page], per_page: 5)
+    @users = User.order('created_at desc').paginate(page: params[:page], per_page: 5)
     @articles_count = Article.where(user_id: @users.ids).group(:user_id).count
   end
 
@@ -22,6 +24,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     return render "new" unless @user.save
 
+    session[:current_user_id] = @user.id
     flash[:notice] = "Welcome to the Alpha-Blog #{@user.username}, you have successfully signed up"
     redirect_to articles_path
   end
@@ -37,9 +40,12 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
+  # DELETE /users/:id
   def destroy
     @user.destroy
-    redirect_to users_path
+    session[:current_user_id] = nil
+    flash[:notice] = 'Profile and all articles associated successfully deleted'
+    redirect_to root_path
   end
 
   private
@@ -51,4 +57,11 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+
+  def require_current_user
+    return if current_user == @user
+    flash[:alert] = 'You can only edit your own profile'
+    redirect_to @user
+  end
+
 end
