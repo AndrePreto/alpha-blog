@@ -21,16 +21,16 @@
                             user_path(user), 
                             class: 'btn btn-outline-success' 
                 %>
-                <% if logged_in? && current_user == user %>
+                <% if logged_in? && (current_user == user || current_user.admin?) %>
                   <%= link_to "Edit Profile", 
                               edit_user_path(user), 
                               class: 'btn btn-outline-primary' 
                   %>
                   <%= link_to "Delete Profile", 
-                              user_path(@user),
+                              user_path(user),
                               method: :delete, 
                               class: 'btn btn-outline-danger',
-                              data: { confirm: "Are you sure you want to delete your profile?" } 
+                              data: { confirm: "Are you sure you want to delete the profile?" } 
                   %>
                 <% end %>
             </div>
