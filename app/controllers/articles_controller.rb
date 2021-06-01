@@ -29,7 +29,7 @@ class ArticlesController < ApplicationController
   # GET /articles/:id/edit
   def edit; end
 
-  # PUT /articles/:id/update
+  # PUT /articles/:id
   def update
     return render "edit" unless @article.update(article_params)
 
@@ -55,6 +55,7 @@ class ArticlesController < ApplicationController
 
   def require_current_user
     return if current_user == @article.user || current_user.admin?
+
     flash[:alert] = 'You can only edit or delete your own articles'
     redirect_to @article
   end
