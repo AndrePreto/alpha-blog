@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   # GET /users/:id
   def edit; end
 
-  # PUT /users/:id/update
+  # PUT /users/:id
   def update
     return render "edit" unless @user.update(user_params)
 
