@@ -1,3 +1,20 @@
-<div>
-  <h1 class="text-center mt-4">Category: <%= @category.name.capitalize %></h1>
+<div class="text-center">
+  <h1 class="mt-4 mb-4">Category: <%= @category.name.capitalize %></h1>
+  <% if logged_in? && current_user.admin? %>
+    <%= link_to "Edit category name", 
+                edit_category_path(@category), 
+                class: 'btn btn-outline-primary' 
+    %>
+    <%= link_to "Delete category", 
+                category_path(@category), 
+                method: :delete, 
+                data: {confirm: 'Are you sure?'} ,
+                class: 'btn btn-outline-danger'
+    %>
+  <% end %> 
+  <% if @category.articles.any? %>
+    <h3 class="mt-4">Related articles</h3>
+    <%= render 'articles/articles' %>
+  <% end %>
+  <%= link_to '[ Back to Categories List ]', categories_path, class: 'row text-dark justify-content-center mb-4 mt-4' %>
 </div>

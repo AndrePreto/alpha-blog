@@ -4,9 +4,20 @@
     <div class="row justify-content-md-center">
       <div class="col-8 text-center">
         <div class="card text-center shadow mb-5 rounded border">
-          <div class="card-header font-italic bg-dark text-white">
-            <%= link_to gravatar_for(@article.user, size: 40), user_path(@article.user) %> 
-            by <%= @article.user.username.capitalize %>
+          <div class="card-header bg-dark text-white">
+            <%= link_to gravatar_for(@article.user, size: 40), user_path(@article.user) %>
+            <div class="font-italic text-white mt-1">
+              by <%= @article.user.username.capitalize %>
+            </div>
+            <% if @article.categories.any? %> 
+              <div class="mt-1">
+                <% @article.categories.each do |category| %>
+                    <%= link_to category.name,
+                                category_path(category),
+                                class: "text-dark d-inline badge badge-pill badge-light ml-1" %>
+                <% end %>
+              </div>
+            <% end %>
           </div>
           <div class="card-body bg-white">
             <h5 class="card-title text-dark">
@@ -16,16 +27,14 @@
               <%= simple_format(@article.description) %>
             </div>
             <% if logged_in? && (current_user == @article.user || current_user.admin?) %>
-              <%= link_to "Edit", 
-                          edit_article_path(@article), 
-                          class: 'btn btn-outline-primary' 
-              %>
-              <%= link_to "Delete", 
-                          article_path(@article), 
-                          method: :delete, 
-                          data: {confirm: 'Are you sure?'} ,
-                          class: 'btn btn-outline-danger'
-              %>
+              <%= link_to "Edit",
+                          edit_article_path(@article),
+                          class: "btn btn-outline-primary" %>
+              <%= link_to "Delete",
+                          article_path(@article),
+                          method: :delete,
+                          data: { confirm: "Are you sure?" },
+                          class: "btn btn-outline-danger" %>
             <% end %>
           </div>
           <div class="card-footer bg-dark text-white">
@@ -33,7 +42,7 @@
             Updated about <%= time_ago_in_words(@article.updated_at) %> ago 
           </div>
         </div>
-        <%= link_to '[ Back to Articles List ]', articles_path, class: 'text-dark' %>
+        <%= link_to "[ Back to Articles List ]", articles_path, class: "text-dark" %>
       </div>
     </div>
   </div>

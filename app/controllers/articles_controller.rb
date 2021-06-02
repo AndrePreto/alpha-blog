@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Article.order('id desc').paginate(page: params[:page], per_page: 5)
+    @articles = Article.includes(:user, :categories).order('id desc').paginate(page: params[:page], per_page: 5)
   end
 
   # GET /articles/:id
@@ -50,7 +50,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :description)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 
   def require_current_user
