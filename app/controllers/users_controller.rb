@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show 
-    @articles = @user.articles.order('id desc').paginate(page: params[:page], per_page: 5)
+    @articles = @user.articles.includes(:categories).order('id desc').paginate(page: params[:page], per_page: 5)
   end
 
   # GET /signup (users#new)

@@ -1,26 +1,4 @@
 <div>
   <h1 class="text-center mt-4 mb-4">Create new category</h1>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <%= render 'shared/errors', object: @category %>
-        <%= form_with model: @category, class: 'shadow mb-5 p-3 bg-dark text-white rounded', local: true do |form| %>
-          
-          <div class="form-group row">
-            <%= form.label :name, class: 'col-2 col-form-label' %>
-            <div class="col-10">
-              <%= form.text_field :name, class: 'form-control', placeholder: 'Choose an username' %>
-            </div>
-          </div>
-
-          <div class="form-group row justify-content-center">
-            <%= form.submit class: 'btn btn-outline-light' %>
-          </div>
-        <% end %>
-      </div>
-      <div class="col-10 text-center">
-        <%= link_to '[ Back ]', categories_path, class: 'text-dark' %>
-      </div>
-    </div>   
-  </div>
+  <%= render 'form' %>
 </div>

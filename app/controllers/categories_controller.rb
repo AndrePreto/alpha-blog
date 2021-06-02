@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   def index
     @categories = Category.order('id desc').paginate(page: params[:page], per_page: 5)
+    @articles_count = ArticleCategory.where(category_id: @categories.ids).group(:category_id).count
   end
   
   # GET /categories/new
@@ -13,7 +14,9 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/:id
-  def show; end
+  def show
+    @articles = @category.articles.order('id desc').paginate(page: params[:page], per_page: 5)
+  end
 
   # POST /categories
   def create

@@ -1,35 +1,43 @@
   <div class="container mt-4">
-    <%= will_paginate @articles, class: 'apple_pagination mb-4 mt-4' %>
+    <%= will_paginate @articles, class: "apple_pagination mb-4 mt-4" %>
     <% @articles.each do |article| %>
       <div class="row justify-content-center">
         <div class="col-8">
           <div class="card text-center shadow mb-5 rounded border">
-            <div class="card-header font-italic bg-dark text-white">
+            <div class="card-header bg-dark text-white">
               <%= link_to gravatar_for(article.user, size: 40), user_path(article.user) %> 
-              by <%= article.user.username.capitalize %>
+              <div class="font-italic text-white">
+                by <%= article.user.username.capitalize %>
+              </div>
+              <% if article.categories.any? %> 
+                <div class="mt-1">
+                  <% article.categories.each do |category| %>
+                      <%= link_to category.name,
+                                  category_path(category),
+                                  class: "text-dark d-inline badge badge-pill badge-light ml-1" %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
             <div class="card-body bg-white">
               <h5 class="card-title">
-                <%= link_to article.title.capitalize, article_path(article), class: 'text-dark' %>
+                <%= link_to article.title.capitalize, article_path(article), class: "text-dark" %>
               </h5>
               <p class="card-text">
                 <%= truncate(article.description, length: 100) %>
               </p>
-              <%= link_to "View", 
-                          article_path(article), 
-                          class: 'btn btn-outline-success' 
-              %>
+              <%= link_to "View",
+                          article_path(article),
+                          class: "btn btn-outline-success" %>
               <% if logged_in? && (current_user == article.user || current_user.admin?) %>
-                <%= link_to "Edit", 
-                            edit_article_path(article), 
-                            class: 'btn btn-outline-primary' 
-                %>
-                <%= link_to "Delete", 
-                            article_path(article), 
-                            method: :delete, 
-                            data: {confirm: 'Are you sure?'} ,
-                            class: 'btn btn-outline-danger'
-                %>
+                <%= link_to "Edit",
+                            edit_article_path(article),
+                            class: "btn btn-outline-primary" %>
+                <%= link_to "Delete",
+                            article_path(article),
+                            method: :delete,
+                            data: { confirm: "Are you sure?" },
+                            class: "btn btn-outline-danger" %>
               <% end %> 
             </div>
             <div class="card-footer bg-dark text-white">
@@ -40,5 +48,5 @@
         </div>
       </div>
     <% end %>
-    <%= will_paginate @articles, class: 'apple_pagination mb-4' %>
+    <%= will_paginate @articles, class: "apple_pagination mb-4" %>
   </div>

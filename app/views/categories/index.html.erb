@@ -10,22 +10,14 @@
               <%= category.name %>
             </div>
             <div class="card-body bg-white">
-              <%= link_to "View", 
+              <div class="mb-2">
+                <% articles_count = @articles_count[category.id] || 0 %>
+                <%= pluralize(articles_count, "Article") %>
+              </div>
+              <%= link_to "Show Articles", 
                           category_path(category), 
                           class: 'btn btn-outline-success' 
               %>
-              <% if logged_in? && current_user.admin? %>
-                <%= link_to "Edit", 
-                            edit_category_path(category), 
-                            class: 'btn btn-outline-primary' 
-                %>
-                <%= link_to "Delete", 
-                            category_path(category), 
-                            method: :delete, 
-                            data: {confirm: 'Are you sure?'} ,
-                            class: 'btn btn-outline-danger'
-                %>
-              <% end %> 
             </div>
             <div class="card-footer bg-dark text-white">
               Created about <%= time_ago_in_words(category.created_at) %> ago, 
