@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_user, except: [:new, :create]
-  before_action :require_current_user, only: [:edit, :update]
+  before_action :require_current_user, only: [:edit, :update, :destroy]
 
   # GET /users
   def index
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   def require_current_user
     return if current_user == @user || current_user.admin?
     flash[:alert] = 'You can only edit or delete your own profile'
-    redirect_to @user
+    redirect_to user_path(@user)
   end
 
 end
