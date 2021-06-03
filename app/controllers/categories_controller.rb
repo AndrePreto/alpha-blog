@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :require_user
   before_action :require_admin_user, except: [:index, :show] 
 
   # GET /categories
@@ -55,7 +56,7 @@ class CategoriesController < ApplicationController
   end
 
   def require_admin_user
-    return if logged_in? && current_user.admin?
+    return if current_user.admin?
     flash[:alert] = "You're not allowed to perform that action"
     redirect_to categories_path
   end

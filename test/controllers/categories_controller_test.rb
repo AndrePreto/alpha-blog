@@ -3,24 +3,21 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category = Category.create(name: 'Sports')
-    @admin_user = User.create(
-      username: 'test', 
-      email: 'test@test.com', 
-      password: 'teste123', 
-      admin: true
-    )
+    @admin_user = User.create(username: 'test', email: 'test@test.com', password: 'teste1', admin: true)
+    @user = User.create(username: 'test1', email: 'test1@test.com', password: 'teste1', admin: false)
   end
 
   test "should get index" do
     # GET "/categories"
-    get categories_url
+    sign_in_as(@user)
+    get categories_path
     assert_response :success
   end
 
   test "should get new" do
     sign_in_as(@admin_user)
     # GET "/categories/new"
-    get new_category_url
+    get new_category_path
     assert_response :success
   end
 
@@ -28,41 +25,67 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@admin_user)
     assert_difference('Category.count', 1) do
       # POST "/categories"
-      post categories_url, params: { category: { name: 'Teste' } }
+      post categories_path, params: { category: { name: 'Teste' } }
     end
 
-    assert_redirected_to category_url(Category.last)
+    assert_redirected_to category_path(Category.last)
   end
 
   test "should not create category if not admin" do
+    sign_in_as(@user)
     assert_no_difference('Category.count') do
       # POST "/categories"
-      post categories_url, params: { category: { name: 'Teste' } }
+      post categories_path, params: { category: { name: 'Teste' } }
     end
 
-    assert_redirected_to categories_url
+    assert_redirected_to categories_path
   end
 
   test "should show category" do
-    get category_url(@category)
+    sign_in_as(@user)
+    # GET "/categories/:id"
+    get category_path(@category)
     assert_response :success
   end
 
-  # test "should get edit" do
-  #   get edit_category_url(@category)
-  #   assert_response :success
-  # end
+  test "should get edit" do
+    # GET "/categories/:id/edit"
+    sign_in_as(@admin_user)
+    get edit_category_path(@category)
+    assert_response :success
+  end
 
-  # test "should update category" do
-  #   patch category_url(@category), params: { category: {  } }
-  #   assert_redirected_to category_url(@category)
-  # end
+  test "should update category if admin" do
+    sign_in_as(@admin_user)
+    # PUT "/categories/:id"
+    patch category_path(@category), params: { category: { name: 'Teste2' } }
+    assert_redirected_to category_path(@category)
+  end
 
-  # test "should destroy category" do
-  #   assert_difference('Category.count', -1) do
-  #     delete category_url(@category)
-  #   end
+  test "should not update category if not admin" do
+    sign_in_as(@user)
+    # PUT "/categories/:id"
+    patch category_path(@category), params: { category: { name: 'Teste2' } }
+    assert_redirected_to categories_path
+  end
 
-  #   assert_redirected_to categories_url
-  # end
+  test "should destroy category if admin" do
+    sign_in_as(@admin_user)
+    assert_difference('Category.count', -1) do
+      # DELETE "/categories/:id"
+      delete category_path(@category)
+    end
+
+    assert_redirected_to categories_path
+  end
+
+  test "should not destroy category if not admin" do
+    sign_in_as(@user)
+    assert_no_difference('Category.count', -1) do
+      # DELETE "/categories/:id"
+      delete category_path(@category)
+    end
+
+    assert_redirected_to categories_path
+  end
 end
